@@ -16,21 +16,6 @@ use Getopt::Long 'HelpMessage';
 use File::stat;
 use LWP::UserAgent;
 
-
-# url of the master playlist
-my $playlist = "https://yourAkamaiSPODhostname-vh.akamaihd.net/i/path/filename_,bitrate1,bitrate2,...,.mp4.csmil/master.m3u8";
-# path to your SSH NetStorage key you deployed
-my $nsKey = "/Users/myUser/.ssh/netstorage/myPublicNetStorageKey.pub";
-# Hostname of the NetStorage group you will use as destination NetStorage
-my $netstorage_host = "myAccount.upload.akamai.com";
-# that is the path on destination NS from root, it could be cpcode/path or path based on NS user settings
-my $cp_code = "myRootNSdirectory";
-#Policy NameLivestream-f Token Auth, set the token key below and a token will be append to the stream url after the question mark as query parameters.
-my $tokenKey = '';
-my $TOKEN=""; # variable supporting the token creation
-
-my $starttime = time;
-
 #use Term::ANSIColor;
 #print color("red"), "Stop!\n", color("reset");
 #print color("green"), "Go!\n", color("reset");
@@ -59,6 +44,27 @@ use constant WARNINGCOLOR => MAGENTA; #magenta
 use constant ERRORCOLOR => RED;
 use constant DEBUGCOLOR => GREEN;
 use constant INFOCOLOR => YELLOW; #blue
+
+# requires Akamai Python EdgeAuth Token generator from here: https://github.com/akamai/EdgeAuth-Token-Python
+# cf install documentation and set the right path below
+my $EdgeAuthPythonScript = "../EdgeAuth-Token-Python/cms_edgeauth.py";
+if (!-d "../EdgeAuth-Token-Python"){
+	print INFOCOLOR,"Python EdgeAuth Token library was not found, please install it if you enabled token auth support\n",RESET;
+}
+
+# url of the master playlist
+my $playlist = "https://yourAkamaiSPODhostname-vh.akamaihd.net/i/path/filename_,bitrate1,bitrate2,...,.mp4.csmil/master.m3u8";
+# path to your SSH NetStorage key you deployed
+my $nsKey = "/Users/myUser/.ssh/netstorage/myPublicNetStorageKey.pub";
+# Hostname of the NetStorage group you will use as destination NetStorage
+my $netstorage_host = "myAccount.upload.akamai.com";
+# that is the path on destination NS from root, it could be cpcode/path or path based on NS user settings
+my $cp_code = "myRootNSdirectory";
+#Policy NameLivestream-f Token Auth, set the token key below and a token will be append to the stream url after the question mark as query parameters.
+my $tokenKey = '';
+my $TOKEN=""; # variable supporting the token creation
+
+my $starttime = time;
 
 my $nbArgs = $#ARGV + 1;
 print INFOCOLOR,"\n";
@@ -151,9 +157,10 @@ $year = $year+1900;
 $date = "$year$month$day";
 
 # compute Token within the script if required.
+# check if python or python3 command is required on your environment and your operating system.
 sub getToken
 {
-	my $TOKEN=`python ./akamai_token_v2.py -n hdnts -s now -w 20000000 -a '/*' -k $TOKENKEY`;
+	my $TOKEN=`python $EdgeAuthPythonScript -n hdnts -s now -w 20000000 -a '/*' -k $TOKENKEY`;
 	$TOKEN =~ s/\r|\n//g;
 	return $TOKEN;
 }
