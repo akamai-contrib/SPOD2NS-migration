@@ -70,7 +70,9 @@ Usage:
             [-debug]
 ```
 
+Output:
 
+- [x] Generate a CSV file output to keep track of what the tool is doing with Action/Url/Status.   
 
 ## Todo
 
