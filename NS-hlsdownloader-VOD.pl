@@ -160,8 +160,14 @@ $date = "$year$month$day";
 # check if python or python3 command is required on your environment and your operating system.
 sub getToken
 {
-	my $TOKEN=`python $EdgeAuthPythonScript -n hdnts -s now -w 20000000 -a '/*' -k $TOKENKEY`;
-	$TOKEN =~ s/\r|\n//g;
+	my $TOKEN=`python $EdgeAuthPythonScript -n hdnts -s now -w 20000000 -a '/*' -k $tokenKey 2>&1`;
+	if ($TOKEN=~/.*(error:).*/i){
+		print "$TOKEN\n---\n";
+		print ERRORCOLOR,"Error with Token process.\n",RESET;
+		exit(1);
+	}
+	$TOKEN = (split(/\n/,$TOKEN))[1];
+	print "Token: $TOKEN\n\n";
 	return $TOKEN;
 }
 
