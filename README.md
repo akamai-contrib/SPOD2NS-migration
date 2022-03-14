@@ -33,7 +33,7 @@ For instance, if you have a list of 4 bitrates, so 4 mp4 on the Netstorage sourc
 
 Akamai and the team I work for can address custom requirements and also provide support on such large migration in case you do not wish the do it yourself route.
 
-## Usage
+## Downloader Usage
 
 Show inline documentation:
 
@@ -73,6 +73,52 @@ Usage:
 Output:
 
 - [x] Generate a CSV file output to keep track of what the tool is doing with Action/Url/Status.   
+
+
+## Batch Download Usage
+
+Show inline documentation:
+
+```
+perl ./processListOfStreams.pl -h
+```
+
+All options:
+
+```
+perl processListOfStreams.pl -file=listOfStreamUrls.txt -nsHost=NetStorage_Hostname -nsPath=NetStorage_Destination_Directory -nsKey=NetStorage_SSH_Public_Key [-tokenKey=key] [-log] [-debug] [-preview]
+
+Usage:
+    perl processListOfStreams.pl -file=listOfStreamUrls.txt -nsHost=NetStorage_Hostname
+    -nsPath=NetStorage_Destination_Directory
+    -nsKey=NetStorage_SSH_Public_Key [-tokenKey=key] [-log] [-debug] [-preview]
+
+    --file,-f 	 file to load (stream urls list)
+    --start,-s     Start index for resume (optional)
+    --end,-e       End index (optional)
+    --reverse,-r   Reverse the list file (optional)
+    --nsHost,-h    Netstorage hostname
+    --nsPath,-p    Netstorage path
+    --nsKey,-k'    Netstorage Key path
+    --tokenKey,-t  Token key (optional)
+    --preview,-p   Run in preview mode without running the download sub-process
+    --debug,-d     Run in debug mode
+    --help,-h      Print this help
+
+  Example:
+        perl processListOfStreams.pl \
+        --file="myLocalTextFileWithStreamUrls.txt" \
+        --nsHost="myAccount.upload.akamai.com" \
+        --nsPath="myRootNSdirectory" \
+        --nsKey="/Users/myUser/.ssh/netstorage/myPublicNetStorageKey.pub" \
+        --preview \
+        --start=30 \
+        --end=40
+
+        This example will load the text file and select stream urls between lines 30 and 40, if valid, it will display the stream urls as preview without running the downloader command.
+        You can restart the command from a specific line in the input file, define an end or reverse the list if needed to start multiple process in different shells
+```
+
 
 ## Todo
 
