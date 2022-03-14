@@ -107,7 +107,7 @@ Usage:
 
   Example:
         perl processListOfStreams.pl \
-        --file="myLocalTextFileWithStreamUrls.txt" \
+        --file="listOfStreams.txt" \
         --nsHost="myAccount.upload.akamai.com" \
         --nsPath="myRootNSdirectory" \
         --nsKey="/Users/myUser/.ssh/netstorage/myPublicNetStorageKey.pub" \
