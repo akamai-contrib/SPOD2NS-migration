@@ -126,9 +126,10 @@ Some corner cases are currently in development:
 
 - [ ] Support custom implementations on top of Akamai SPOD delivery.   
 - [ ] Support advanced features, WebVTT beta.  
-- [ ] Helper to retrieve Stream urls from a single NetStorage group by exploring directories and files, rebuilding the stream url from discovered assets, mp4 by bitrate.  
+- [X] Helper to retrieve Stream urls from a single NetStorage group by exploring directories and files, rebuilding the stream url from discovered assets, mp4 by bitrate.  
 - [ ] Generate a batch script to remove source files when the process is over so you could clean up source files on the source NetStorage to reduce the costs.  
-- [ ] Helper to retrieve all hostnames valid candidates for migration, list all SPOD configurations and hostnames for a customer using APIs.
+- [X] Helper to retrieve all hostnames valid candidates for migration, list all SPOD configurations and hostnames for a customer using APIs.
+- [ ] Migrate Akamai hostnames into AMD config and implement logic to reuse legacy urls on AMD.
 
 Then we will automate the migration and also allow migration of additional assets referenced in the master or child playlists.
 

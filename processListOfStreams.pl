@@ -47,6 +47,7 @@ my $end = 0;
 my $rev = 0;
 my $help = 0;
 my $preview = 0;
+my $downloader = "NS-hlsdownloader-VOD.pl";
 
 my $nbArgs = $#ARGV + 1;
 print INFOCOLOR,"\n";
@@ -252,13 +253,13 @@ my $nbid = 0;
 			if ($preview eq 0) {
 				print INFOCOLOR, "$playlist\n", RESET;
 				if ($debug) {
-					print INFOCOLOR, "perl ./NS-hlsdownloader-VOD.pl $commandDownload 2>&1\n", RESET;
+					print INFOCOLOR, "perl $downloader $commandDownload 2>&1\n", RESET;
 				}
 				# processing the download, the command run below doesn't provide runtime output during the process
 				#my @downloadProcess = `perl ./NS-hlsdownloader-VOD.pl $commandDownload 2>&1`;
 
 				# so a better option is to stream the output and print
-				open(INPUT, "perl ./NS-hlsdownloader-VOD.pl $commandDownload |") or die $!;
+				open(INPUT, "perl $downloader $commandDownload |") or die $!;
 				while(<INPUT>) {
 					# Monitor process here, if required we could react to some events during the process
 					#if(/regex/) { dosomething($_); }
@@ -269,7 +270,7 @@ my $nbid = 0;
 				# useful for a dry run on the list to check as process can take some time
 				print INFOCOLOR, "Preview: $playlist\n", RESET;
 				if ($debug>0) {
-					print INFOCOLOR, "Preview: perl ./NS-hlsdownloader-VOD.pl $commandDownload 2>&1\n", RESET;
+					print INFOCOLOR, "Preview: perl $downloader $commandDownload 2>&1\n", RESET;
 				}
 			}
 		} else {
